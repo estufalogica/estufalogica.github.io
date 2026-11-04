@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="1080" height="1080">
+<rect width="200" height="200" fill="#1F5C3F"/>
+<g transform="translate(100 100) scale(1.35) translate(-140 -99)">
+<path d="M140 50 C182 68 182 128 140 148 C98 128 98 68 140 50 Z" fill="#FFFFFF"/>
+<line x1="140" y1="62" x2="140" y2="140" stroke="#1F5C3F" stroke-width="3.5" stroke-linecap="round"/>
+<polyline points="140,84 152,77 156,77" fill="none" stroke="#1F5C3F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="159" cy="77" r="3.5" fill="#1F5C3F"/>
+<polyline points="140,102 128,95 124,95" fill="none" stroke="#1F5C3F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="121" cy="95" r="3.5" fill="#1F5C3F"/>
+<polyline points="140,120 152,113 156,113" fill="none" stroke="#1F5C3F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="159" cy="113" r="3.5" fill="#1F5C3F"/>
+</g>
+</svg>

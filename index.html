@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Estufa Lógica · Automação de cultivo indoor</title>
+<meta name="description" content="Cultivo indoor automatizado com Home Assistant: VPD, luz e rega controlados por sensores. Menos palpite, mais dado.">
+<link rel="icon" href="logo.svg" type="image/svg+xml">
+<meta property="og:title" content="Estufa Lógica">
+<meta property="og:description" content="Cultivo indoor automatizado. Menos palpite, mais dado.">
+<meta property="og:image" content="https://estufalogica.com/og.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --vidro:#E8EFEA;
+  --folha:#1F5C3F;
+  --tinta:#15241B;
+  --musgo:#4B6656;
+  --nevoa:#C9D8CE;
+  --led:#D98E1F;
+  --papel:#F7FAF8;
+}
+@media (prefers-color-scheme: dark){
+  :root{--vidro:#0F1C15;--tinta:#E6EFE9;--musgo:#9DB8A7;--nevoa:#28402F;--papel:#15261C;--led:#F0A93B;--folha:#6FC497}
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--vidro);color:var(--tinta);font-family:"Atkinson Hyperlegible",system-ui,sans-serif;font-size:18px;line-height:1.6}
+a{color:var(--folha);text-underline-offset:3px}
+a:focus-visible{outline:3px solid var(--led);outline-offset:3px;border-radius:2px}
+.wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+header{display:flex;align-items:center;gap:12px;padding:28px 0}
+header img{width:40px;height:40px;border-radius:50%}
+header span{font-family:"Bricolage Grotesque",sans-serif;font-weight:600;font-size:20px;letter-spacing:-.01em}
+.hero{padding:48px 0 24px}
+h1{font-family:"Bricolage Grotesque",sans-serif;font-weight:600;font-size:clamp(48px,9vw,112px);line-height:.95;letter-spacing:-.035em;margin:0;max-width:11ch}
+.lede{font-size:21px;color:var(--musgo);max-width:34em;margin:28px 0 0}
+.leitura{margin:56px 0 8px;background:var(--papel);border:1px solid var(--nevoa);border-radius:18px;padding:24px 24px 16px}
+.leitura-top{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;font-size:15px;color:var(--musgo)}
+.leitura-top strong{font-family:"Bricolage Grotesque",sans-serif;font-size:34px;color:var(--tinta);font-weight:600;letter-spacing:-.02em}
+.leitura svg{display:block;width:100%;height:auto;margin-top:12px}
+.faixa{fill:var(--folha);opacity:.12}
+.lim{stroke:var(--folha);stroke-width:1;stroke-dasharray:4 4;opacity:.6}
+.antes{fill:none;stroke:var(--musgo);stroke-width:2;opacity:.45}
+.depois{fill:none;stroke:var(--led);stroke-width:3;stroke-linecap:round;stroke-dasharray:900;stroke-dashoffset:900;animation:traco 2.4s .4s ease-out forwards}
+.eixo{font-size:13px;fill:var(--musgo);font-family:"Atkinson Hyperlegible",sans-serif}
+.legenda{display:flex;gap:20px;flex-wrap:wrap;font-size:14px;color:var(--musgo);margin-top:6px}
+.legenda i{display:inline-block;width:18px;height:3px;vertical-align:middle;margin-right:6px;border-radius:2px}
+@keyframes traco{to{stroke-dashoffset:0}}
+@media (prefers-reduced-motion:reduce){.depois{animation:none;stroke-dashoffset:0}}
+section{padding:72px 0 0}
+h2{font-family:"Bricolage Grotesque",sans-serif;font-weight:600;font-size:32px;letter-spacing:-.02em;margin:0 0 24px}
+.controles{list-style:none;margin:0;padding:0;border-top:1px solid var(--nevoa)}
+.controles li{display:grid;grid-template-columns:180px 1fr;gap:16px;padding:20px 0;border-bottom:1px solid var(--nevoa)}
+.controles b{font-family:"Bricolage Grotesque",sans-serif;font-size:22px;font-weight:600}
+.controles p{margin:0;color:var(--musgo);max-width:38em}
+.artigos{margin:0;padding-left:1.2em;color:var(--musgo)}
+.artigos li{padding:6px 0}
+.artigos li::marker{color:var(--folha);font-weight:700}
+.nota{font-size:16px;color:var(--musgo);margin-top:16px}
+.contato{display:flex;flex-wrap:wrap;gap:12px 32px;font-size:19px}
+footer{padding:96px 0 40px;font-size:14px;color:var(--musgo)}
+@media (max-width:640px){
+  body{font-size:17px}
+  .controles li{grid-template-columns:1fr;gap:4px}
+  .leitura{padding:18px 16px 12px}
+  .wrap{padding:0 16px}
+  .eixo{font-size:34px}
+  .eixo-y{display:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <img src="logo.svg" alt="">
+    <span>Estufa Lógica</span>
+  </header>
+
+  <main>
+    <div class="hero">
+      <h1>Menos palpite, mais dado.</h1>
+      <p class="lede">Automação de cultivo indoor com Home Assistant. Clima, luz e rega controlados por sensores, com regras que você entende e ajusta.</p>
+
+      <figure class="leitura" aria-labelledby="leg-vpd">
+        <div class="leitura-top">
+          <span id="leg-vpd">VPD ao longo de 24 horas, em kPa</span>
+          <span>alvo <strong>0,8–1,2</strong></span>
+        </div>
+        <svg viewBox="0 0 960 240" role="img" aria-label="Gráfico ilustrativo: sem automação o VPD oscila para fora da faixa alvo; com o exaustor controlado pelo VPD, a curva fica dentro da faixa.">
+          <rect class="faixa" x="40" y="70" width="900" height="90"/>
+          <line class="lim" x1="40" y1="70" x2="940" y2="70"/>
+          <line class="lim" x1="40" y1="160" x2="940" y2="160"/>
+          <text class="eixo eixo-y" x="0" y="74">1,2</text>
+          <text class="eixo eixo-y" x="0" y="164">0,8</text>
+          <path class="antes" d="M40 150 C100 60 140 30 200 70 S300 210 360 190 S460 40 520 50 S620 220 680 200 S780 30 840 60 S920 170 940 150"/>
+          <path class="depois" d="M40 150 C90 120 130 104 200 110 S300 128 360 122 S460 100 520 104 S620 132 680 126 S780 102 840 108 S920 122 940 118"/>
+          <text class="eixo" x="40" y="234">0h</text>
+          <text class="eixo" x="480" y="234" text-anchor="middle">12h</text>
+          <text class="eixo" x="940" y="234" text-anchor="end">24h</text>
+        </svg>
+        <figcaption class="legenda">
+          <span><i style="background:var(--musgo);opacity:.6"></i>Sem automação</span>
+          <span><i style="background:var(--led)"></i>Exaustor controlado pelo VPD</span>
+        </figcaption>
+      </figure>
+    </div>
+
+    <section aria-labelledby="t-controles">
+      <h2 id="t-controles">O que dá para automatizar</h2>
+      <ul class="controles">
+        <li><b>Clima</b><p>Exaustor e desumidificador acionados pelo VPD calculado a partir de temperatura, umidade e temperatura da folha.</p></li>
+        <li><b>Luz</b><p>Fotoperíodo programado por fase e dimming do LED com rampa de nascer e pôr do sol.</p></li>
+        <li><b>Rega</b><p>Reservatório com sensor de nível, umidade do substrato e alerta antes de faltar água.</p></li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="t-artigos">
+      <h2 id="t-artigos">Primeiros artigos</h2>
+      <ol class="artigos">
+        <li>O que é VPD e por que ele importa mais que a umidade sozinha</li>
+        <li>Como calcular o VPD no Home Assistant</li>
+        <li>Exaustor automático pelo VPD</li>
+        <li>Dimming de driver LED com ESP32</li>
+      </ol>
+      <p class="nota">Os artigos saem aqui conforme ficarem prontos, com o YAML de cada um no <a href="https://github.com/estufalogica">GitHub</a>.</p>
+    </section>
+
+    <section aria-labelledby="t-contato">
+      <h2 id="t-contato">Contato</h2>
+      <div class="contato">
+        <a href="mailto:estufalogica@gmail.com">estufalogica@gmail.com</a>
+        <a href="https://instagram.com/estufalogica">Instagram</a>
+        <a href="https://github.com/estufalogica">GitHub</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>Estufa Lógica</footer>
+</div>
+</body>
+</html>
