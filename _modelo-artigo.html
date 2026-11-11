@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="pt-BR">
+<!--
+  MODELO DE ARTIGO — não é publicado (o GitHub Pages ignora arquivos que começam com "_").
+  Para um artigo novo: copiar para artigos/<slug>/index.html, trocar os campos {{ }} e
+  acrescentar o item na lista de artigos/index.html (e na home, se for dos 3 mais recentes).
+-->
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{TITULO}} · Estufa Lógica</title>
+<meta name="description" content="{{RESUMO}}">
+<link rel="icon" href="/logo.svg" type="image/svg+xml">
+<meta property="og:title" content="{{TITULO}}">
+<meta property="og:description" content="{{RESUMO}}">
+<meta property="og:image" content="https://estufalogica.com/og.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="marca" href="/"><img src="/logo.svg" alt=""><span>Estufa Lógica</span></a>
+    <nav aria-label="Principal">
+      <a href="/artigos/">Artigos</a>
+      <a href="/#contato">Contato</a>
+    </nav>
+  </header>
+
+  <main>
+    <article class="artigo">
+      <h1>{{TITULO}}</h1>
+      <p class="meta"><time datetime="{{AAAA-MM-DD}}">{{DATA POR EXTENSO}}</time> · {{N}} min de leitura</p>
+      <p class="resumo">{{RESUMO EM UMA OU DUAS FRASES}}</p>
+
+      <h2>{{SEÇÃO}}</h2>
+      <p>{{TEXTO}}</p>
+
+      <figure>
+        <img src="{{IMAGEM}}" alt="{{DESCRIÇÃO DA IMAGEM}}">
+        <figcaption>{{LEGENDA}}</figcaption>
+      </figure>
+
+      <div class="chamada">
+        <p>Quer saber o que dá para automatizar na sua estufa? Escreva para <a href="mailto:estufalogica@gmail.com">estufalogica@gmail.com</a> com fotos dos equipamentos que você já tem.</p>
+      </div>
+    </article>
+  </main>
+
+  <footer>Estufa Lógica · <a href="/artigos/">todos os artigos</a></footer>
+</div>
+</body>
+</html>
